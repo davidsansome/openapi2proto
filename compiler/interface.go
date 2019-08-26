@@ -9,7 +9,7 @@ import (
 
 const (
 	phaseInvalid = iota
-	phaseCompileDefinitions
+	phaseCompileComponents
 	phaseCompileExtensions
 	phaseCompilePaths
 )
