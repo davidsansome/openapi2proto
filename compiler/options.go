@@ -8,6 +8,7 @@ const (
 	optkeyPrefixEnums    = "namespace-enums"
 	optkeyWrapPrimitives = "wrap-primitives"
 	optkeyTag            = "tag"
+	optKeyPackageName    = "package"
 )
 
 // WithAnnotation creates a new Option to specify if we should add
@@ -36,4 +37,8 @@ func WithWrapPrimitives(b bool) Option {
 
 func WithTag(s string) Option {
 	return option.New(optkeyTag, s)
+}
+
+func WithPackageName(s string) Option {
+	return option.New(optKeyPackageName, s)
 }

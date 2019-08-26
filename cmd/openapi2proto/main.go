@@ -29,6 +29,7 @@ func _main() error {
 	namespaceEnums := flag.Bool("namespace-enums", false, "prefix enum values with the enum name to prevent namespace conflicts. Defaults to false if not set")
 	wrapPrimitives := flag.Bool("wrap-primitives", false, "specify primitive values using their wrapper message types instead of their scalar types. Defaults to false if not set")
 	tag := flag.String("tag", "", "if specified, only output RPCs for paths with this tag")
+	pkgName := flag.String("package", "", "package name to use in generated Go files")
 	flag.Parse()
 
 	var dst io.Writer = os.Stdout
@@ -50,6 +51,7 @@ func _main() error {
 	compilerOptions = append(compilerOptions, compiler.WithPrefixEnums(*namespaceEnums))
 	compilerOptions = append(compilerOptions, compiler.WithWrapPrimitives(*wrapPrimitives))
 	compilerOptions = append(compilerOptions, compiler.WithTag(*tag))
+	compilerOptions = append(compilerOptions, compiler.WithPackageName(*pkgName))
 
 	if *indent > 0 {
 		var indentStr bytes.Buffer

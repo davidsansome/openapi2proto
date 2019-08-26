@@ -45,15 +45,12 @@ func init() {
 }
 
 func newCompileCtx(spec *openapi.Spec, options ...Option) *compileCtx {
-	p := protobuf.NewPackage(packageName(spec.Info.Title))
-	svc := protobuf.NewService(normalizeServiceName(spec.Info.Title))
-	p.AddType(svc)
-
 	var annotate bool
 	var skipRpcs bool
 	var prefixEnums bool
 	var wrapPrimitives bool
 	var tag string
+	var pkgName string
 	for _, o := range options {
 		switch o.Name() {
 		case optkeyAnnotation:
@@ -66,8 +63,18 @@ func newCompileCtx(spec *openapi.Spec, options ...Option) *compileCtx {
 			wrapPrimitives = o.Value().(bool)
 		case optkeyTag:
 			tag = o.Value().(string)
+		case optKeyPackageName:
+			pkgName = o.Value().(string)
 		}
 	}
+
+	if pkgName == "" {
+		pkgName = packageName(spec.Info.Title)
+	}
+
+	p := protobuf.NewPackage(pkgName)
+	svc := protobuf.NewService(normalizeServiceName(spec.Info.Title))
+	p.AddType(svc)
 
 	c := &compileCtx{
 		annotate:            annotate,
