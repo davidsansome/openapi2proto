@@ -38,6 +38,7 @@ var (
 	Int64ValueType  = NewMessage("google.protobuf.Int64Value")
 	NullValueType   = NewMessage("google.protobuf.NullValue")
 	StringValueType = NewMessage("google.protobuf.StringValue")
+	TimestampType   = NewMessage("google.protobuf.Timestamp")
 )
 
 // value type

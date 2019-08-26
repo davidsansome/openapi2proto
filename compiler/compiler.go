@@ -756,6 +756,9 @@ func (c *compileCtx) applyBuiltinFormat(t protobuf.Type, f string) (rt protobuf.
 		if f == "byte" {
 			return protobuf.BytesType
 		}
+		if f == "date-time" {
+			return protobuf.TimestampType
+		}
 		return protobuf.StringType
 	case "pseudo:integer":
 		if f == "int64" {
