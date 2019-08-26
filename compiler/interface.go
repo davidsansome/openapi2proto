@@ -22,6 +22,7 @@ type compileCtx struct {
 	skipRpcs            bool
 	prefixEnums         bool
 	wrapPrimitives      bool
+	tag                 string
 	definitions         map[string]protobuf.Type
 	externalDefinitions map[string]map[string]protobuf.Type
 	imports             map[string]struct{}

@@ -59,6 +59,15 @@ func (s Schema) IsNil() bool {
 	return s.isNil
 }
 
+func (e Endpoint) HasTag(tag string) bool {
+	for _, t := range e.Tags {
+		if t == tag {
+			return true
+		}
+	}
+	return false
+}
+
 // UnmarshalJSON decodes JSON data into a SchemaType
 func (s *SchemaType) UnmarshalJSON(data []byte) error {
 	var str string

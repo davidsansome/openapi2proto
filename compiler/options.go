@@ -7,6 +7,7 @@ const (
 	optkeySkipRpcs       = "skip-rpcs"
 	optkeyPrefixEnums    = "namespace-enums"
 	optkeyWrapPrimitives = "wrap-primitives"
+	optkeyTag            = "tag"
 )
 
 // WithAnnotation creates a new Option to specify if we should add
@@ -31,4 +32,8 @@ func WithPrefixEnums(b bool) Option {
 // and https://developers.google.com/protocol-buffers/docs/proto3#default
 func WithWrapPrimitives(b bool) Option {
 	return option.New(optkeyWrapPrimitives, b)
+}
+
+func WithTag(s string) Option {
+	return option.New(optkeyTag, s)
 }

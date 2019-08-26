@@ -53,6 +53,7 @@ func newCompileCtx(spec *openapi.Spec, options ...Option) *compileCtx {
 	var skipRpcs bool
 	var prefixEnums bool
 	var wrapPrimitives bool
+	var tag string
 	for _, o := range options {
 		switch o.Name() {
 		case optkeyAnnotation:
@@ -63,6 +64,8 @@ func newCompileCtx(spec *openapi.Spec, options ...Option) *compileCtx {
 			prefixEnums = o.Value().(bool)
 		case optkeyWrapPrimitives:
 			wrapPrimitives = o.Value().(bool)
+		case optkeyTag:
+			tag = o.Value().(string)
 		}
 	}
 
@@ -71,6 +74,7 @@ func newCompileCtx(spec *openapi.Spec, options ...Option) *compileCtx {
 		skipRpcs:            skipRpcs,
 		prefixEnums:         prefixEnums,
 		wrapPrimitives:      wrapPrimitives,
+		tag:                 tag,
 		definitions:         map[string]protobuf.Type{},
 		externalDefinitions: map[string]map[string]protobuf.Type{},
 		imports:             map[string]struct{}{},
@@ -285,6 +289,9 @@ func (c *compileCtx) compileParametersToSchema(params openapi.Parameters) (*open
 func (c *compileCtx) compilePath(path string, p *openapi.Path) error {
 	for _, e := range []*openapi.Endpoint{p.Get, p.Put, p.Post, p.Patch, p.Delete} {
 		if e == nil {
+			continue
+		}
+		if c.tag != "" && !e.HasTag(c.tag) {
 			continue
 		}
 
